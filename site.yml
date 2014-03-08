@@ -1,0 +1,8 @@
+---
+- hosts: hadoop
+  roles:
+    - common
+
+- hosts: pseudo_distributed
+  roles:
+    - pseudo_distributed

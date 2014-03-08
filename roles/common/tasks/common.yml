@@ -1,0 +1,9 @@
+---
+
+- name: python curl
+  apt: pkg=python-pycurl
+  sudo: yes
+
+- include: java.yml
+
+- include: cloudera.yml

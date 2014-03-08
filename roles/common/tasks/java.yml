@@ -1,0 +1,29 @@
+---
+# java http://www.webupd8.org/2012/06/how-to-install-oracle-java-7-in-debian.html
+
+- name: Java Repository
+  apt_repository: repo="deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" state=present
+  sudo: yes
+
+- name: Java Src Repository
+  apt_repository: repo="deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" state=present
+  sudo: yes
+
+- name: java key
+  command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886
+  sudo: yes
+
+- name: to automatically
+  shell: echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | sudo /usr/bin/debconf-set-selections
+
+- name: apt update
+  apt: update_cache=yes
+  sudo: yes
+
+- name: install java
+  apt: pkg=oracle-java7-installer state=present
+  sudo: yes
+
+- name: install java-set-default
+  apt: pkg=oracle-java7-set-default state=present
+  sudo: yes

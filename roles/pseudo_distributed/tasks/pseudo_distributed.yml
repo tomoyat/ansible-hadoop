@@ -1,0 +1,4 @@
+---
+
+- name: hadoop 0.20 pseudo install
+  apt: pkg=hadoop-0.20-conf-pseudo state=present
