@@ -1,6 +1,3 @@
 ---
 
-- name: test
-  command: ls -la
-
-#- include: pseudo_distributed.yml
+- include: pseudo_distributed.yml

@@ -1,0 +1,9 @@
+
+- name: restart all hadoop process
+  service: name={{ item }} state=restarted
+  with_items:
+    - hadoop-hdfs-namenode
+    - hadoop-hdfs-datanode
+    - hadoop-0.20-mapreduce-jobtracker
+    - hadoop-0.20-mapreduce-tasktracker
+  sudo: yes

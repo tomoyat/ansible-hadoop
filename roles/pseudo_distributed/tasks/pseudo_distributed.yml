@@ -2,3 +2,60 @@
 
 - name: hadoop 0.20 pseudo install
   apt: pkg=hadoop-0.20-conf-pseudo state=present
+  sudo: yes
+
+- name: name node format
+  shell: creates=/usr/lib/hadoop/namenode.formatted hadoop namenode -format
+  sudo: yes
+  sudo_user: hdfs
+
+- name: make hadoop namenode formatted flg
+  file: path=/usr/lib/hadoop/namenode.formatted owner=root state=touch
+  sudo: yes
+
+- name: start hdfs
+  service: name={{ item }} state=started
+  with_items:
+    - hadoop-hdfs-namenode
+    - hadoop-hdfs-datanode
+  sudo: yes
+
+- name: hdfs tmp directory
+  shell: creates=/usr/lib/hadoop/hdfs.tmp.dir.created hadoop fs -mkdir /tmp && hadoop fs -chmod -R 1777 /tmp
+  sudo: yes
+  sudo_user: hdfs
+
+- name: make tmp directory flg
+  file: path=/usr/lib/hadoop/hdfs.tmp.dir.created owner=root state=touch
+  sudo: yes
+
+- name: make mapred directory
+  shell: creates=/usr/lib/hadoop/mapred.dir.created hadoop fs -mkdir -p /var/lib/hadoop-hdfs/cache/mapred/mapred/staging && hadoop fs -chmod 1777 /var/lib/hadoop-hdfs/cache/mapred/mapred/staging && hadoop fs -chown -R mapred /var/lib/hadoop-hdfs/cache/mapred
+  sudo: yes
+  sudo_user: hdfs
+
+- name: make mapred directory flg
+  file: path=/usr/lib/hadoop/mapred.dir.created owner=root state=touch
+  sudo: yes
+
+- name: start mapreduce job tracker
+  service: name={{ item }} state=started
+  with_items:
+    - hadoop-0.20-mapreduce-jobtracker
+  sudo: yes
+
+- name: start mapreduce task tracker
+  service: name={{ item }} state=started
+  with_items:
+    - hadoop-0.20-mapreduce-tasktracker
+  sudo: yes
+
+
+- name: deploy conf files
+  copy: src={{ item }} dest=/etc/hadoop/conf/{{ item }} owner=root group=hadoop
+  with_items:
+    - core-site.xml
+    - mapred-site.xml
+  sudo: yes
+  notify:
+    - restart all hadoop process
