@@ -2,6 +2,7 @@
 - hosts: hadoop
   roles:
     - common
+    - mysql
 
 - hosts: pseudo_distributed
   roles:
