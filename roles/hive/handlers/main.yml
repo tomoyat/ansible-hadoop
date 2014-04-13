@@ -1,0 +1,4 @@
+
+- include: metastore_handler.yml
+- include: zookeeper_handler.yml
+- include: hive_handler.yml

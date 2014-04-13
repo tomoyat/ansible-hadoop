@@ -1,0 +1,4 @@
+
+- name: initialize zookeeper server
+  command: /etc/init.d/zookeeper-server init
+  sudo: yes

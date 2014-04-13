@@ -1,0 +1,11 @@
+---
+metastore_host: localhost
+metastore_db_name: hive_metastore
+mysql_root_password: password
+metastore_schema_path: /etc/hive/conf/hive-schema-0.10.0.mysql.sql
+metastore_user_name: hive
+metastore_user_pass: password
+
+hiveserver_hostname: localhost
+
+zookeeper_hostname: localhost

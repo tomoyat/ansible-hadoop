@@ -7,3 +7,4 @@
 - hosts: pseudo_distributed
   roles:
     - pseudo_distributed
+    - hive

@@ -1,0 +1,6 @@
+
+- name: install zookeeper
+  apt: pkg=zookeeper-server state=present
+  sudo: yes
+  notify:
+    - initialize zookeeper server

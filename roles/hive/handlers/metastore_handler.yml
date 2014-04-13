@@ -1,0 +1,3 @@
+
+- name: import mysql schema
+  mysql_db: name={{ metastore_db_name }} state=import target={{ metastore_schema_path }} login_user=root login_password={{ mysql_root_password }}

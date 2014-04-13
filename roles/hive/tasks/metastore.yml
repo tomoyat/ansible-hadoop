@@ -1,0 +1,22 @@
+
+- name: install metastore packages
+  apt: pkg={{ item }} state=present
+  with_items:
+    - hive-metastore
+    - libmysql-java
+  sudo: yes
+
+- name: make jdbc slink
+  file: src=/usr/share/java/mysql.jar dest=/usr/lib/hive/lib/mysql.jar state=link
+  sudo: yes
+
+- name: copy metastore schema sql
+  copy: src=hive-schema-0.10.0.mysql.sql dest={{ metastore_schema_path }} owner=root group=root
+  sudo: yes
+
+- name: create metastore db
+  mysql_db: name={{ metastore_db_name }} state=present login_user=root login_password={{ mysql_root_password }}
+  notify: import mysql schema
+
+- name: create metastore hive user
+  mysql_user: name={{ metastore_user_name }} password={{ metastore_user_pass }} state=present priv={{ metastore_db_name }}.*:ALL login_user=root login_password={{ mysql_root_password }}

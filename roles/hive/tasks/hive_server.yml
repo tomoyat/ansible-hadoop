@@ -1,0 +1,4 @@
+
+- name: install hive server2
+  apt: pkg=hive-server2 state=present
+  sudo: yes

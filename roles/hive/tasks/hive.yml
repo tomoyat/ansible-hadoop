@@ -1,0 +1,20 @@
+
+- name: install hive packages
+  apt: pkg={{ item }} state=present
+  with_items:
+    - hive
+  sudo: yes
+
+- include: metastore.yml
+- include: zookeeper.yml
+- include: hive_server.yml
+
+- name: deploy hive conf
+  template: src={{ item }}.j2 dest=/etc/hive/conf/{{ item }}
+  with_items:
+    - hive-site.xml
+  sudo: yes
+  notify:
+    - restart zookeeper
+    - restart metastore
+    - restart hive-server
