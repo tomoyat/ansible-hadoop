@@ -9,3 +9,8 @@ metastore_user_pass: password
 hiveserver_hostname: localhost
 
 zookeeper_hostname: localhost
+
+hive_udf_direcotry_type: file://
+hive_udf_directory: /usr/local/lib/hive_udf
+
+hadoop_mapred_home: /usr/lib/hadoop-0.20-mapreduce

@@ -9,6 +9,12 @@
 - include: zookeeper.yml
 - include: hive_server.yml
 
+- name: deploy hive bin
+  template: src={{ item }}.j2 dest=/usr/lib/hive/bin/{{ item }} mode=0755
+  with_items:
+    - hive-config.sh
+  sudo: yes
+
 - name: deploy hive conf
   template: src={{ item }}.j2 dest=/etc/hive/conf/{{ item }}
   with_items:
@@ -18,3 +24,12 @@
     - restart zookeeper
     - restart metastore
     - restart hive-server
+
+- name: make hive user directory on hdfs
+  shell: creates=/usr/lib/hive/hive.user.dir.created hdfs dfs -mkdir -p /user/hive && hdfs dfs -chown hive /user/hive && hdfs dfs -chmod 755 /user/hive
+  sudo: yes
+  sudo_user: hdfs
+
+- name: make hive user directory created flg
+  file: path=/usr/lib/hive/hive.user.dir.created owner=root state=touch
+  sudo: yes

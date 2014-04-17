@@ -2,3 +2,7 @@
 - name: install hive server2
   apt: pkg=hive-server2 state=present
   sudo: yes
+
+- name: make udf directory
+  file: path={{ hive_udf_directory }} state=directory mode=777
+  sudo: yes
