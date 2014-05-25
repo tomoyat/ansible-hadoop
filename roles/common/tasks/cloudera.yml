@@ -1,11 +1,11 @@
 ---
 
 - name: Cloudera Repository
-  apt_repository: repo="deb http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh squeeze-cdh4 contrib" state=present
+  apt_repository: repo="deb http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh squeeze-cdh4.5.0 contrib" state=present
   sudo: yes
 
 - name: Cloudera Src Repository
-  apt_repository: repo="deb-src http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh squeeze-cdh4 contrib" state=present
+  apt_repository: repo="deb-src http://archive.cloudera.com/cdh4/debian/squeeze/amd64/cdh squeeze-cdh4.5.0 contrib" state=present
   sudo: yes
 
 - name: Cloudera Apt-key

@@ -1,0 +1,2 @@
+hdfs_host: ansible-hadoop
+mapred_host: ansible-hadoop

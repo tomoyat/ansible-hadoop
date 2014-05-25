@@ -52,7 +52,7 @@
 
 
 - name: deploy conf files
-  copy: src={{ item }} dest=/etc/hadoop/conf/{{ item }} owner=root group=hadoop
+  template: src={{ item }}.j2 dest=/etc/hadoop/conf/{{ item }} owner=root group=hadoop
   with_items:
     - core-site.xml
     - mapred-site.xml
