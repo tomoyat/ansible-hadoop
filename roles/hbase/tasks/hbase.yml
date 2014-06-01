@@ -1,0 +1,27 @@
+
+- name: install hbase package
+  apt: pkg={{ item }} state=present
+  with_items:
+    - hbase
+    - hbase-master
+    - hbase-regionserver
+    - hbase-thrift
+  sudo: yes
+
+- name: make hbase directory on hbase
+  shell: creates=/usr/lib/hbase/hbase.dir.created hdfs dfs -mkdir -p /hbase && hdfs dfs -chown hbase /hbase && hdfs dfs -chmod 755 /hbase
+  sudo: yes
+  sudo_user: hdfs
+
+- name: make hbase directory created flg
+  file: path=/usr/lib/hbase/hbase.dir.created owner=root state=touch
+  sudo: yes
+
+- name: deploy hbase conf
+  template: src={{ item }}.j2 dest=/etc/hbase/conf/{{ item }}
+  with_items:
+    - hbase-site.xml
+  sudo: yes
+  notify:
+    - restart hbase master
+    - restart hbase regionserver

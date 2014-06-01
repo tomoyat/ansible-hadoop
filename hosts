@@ -3,3 +3,6 @@ pseudo_distributed
 
 [pseudo_distributed]
 ansible-hadoop
+
+[hbase]
+dev-hadoop
